@@ -39,6 +39,7 @@ set scrolloff=4
 set novisualbell
 set noerrorbells
 set mousehide
+set mouse=nv
 
 set wrapscan
 
@@ -46,10 +47,12 @@ set switchbuf=useopen
 set nobackup
 set noswapfile
 
+set pastetoggle=<F2>
+
 " Map nonprintable characters and toggle visibility
 " using ,c
-set listchars=tab:>-,trail:·,eol:$
-"nmap <silent> <leader>c :set nolist!<CR>
+set listchars=tab:>-,trail:·,eol:¶
+nmap <silent> <leader>c :set nolist!<CR>
 
 set background=dark
 
@@ -87,15 +90,35 @@ set cm=blowfish
 filetype off
 
 set rtp+=~/.vim/bundle/vundle
-call vundle#rc()
+call vundle#begin()
 
 " let Vundle manage Vundle
 " required! 
-Bundle 'gmarik/vundle'
-
-" Bundles:
-Bundle "L9"
-Bundle "FuzzyFinder"
+Plugin 'gmarik/vundle'
+" Plugins:
+Plugin 'L9'
+Plugin 'FuzzyFinder'
+Plugin 'ack.vim'
+Plugin 'repeat.vim'
+Plugin 'surround.vim'
+Plugin 'Align'
+Plugin 'matchit.zip'
+Plugin 'ZoomWin'
+Plugin 'scrooloose/nerdtree'
+Plugin 'Tagbar'
+Plugin 'vimwiki'
+Plugin 'tpope/vim-fugitive'
+" Plugin 'tpope/vim-rails'
+Plugin 'VimOutliner'
+Plugin 'jelera/vim-javascript-syntax'
+Plugin 'bling/vim-airline'
+Plugin 'CSApprox'
+Plugin 'derekwyatt/vim-scala'
+" Plugin 'scrooloose/syntastic'
+Plugin 'ctrlp.vim'
+Plugin 'benmills/vimux'
+Plugin 'LaTeX-Box-Team/LaTeX-Box'
+call vundle#end()
 " configure FuzzyFinder
 let g:fuzzy_ignore="*.log"
 let g:fuzzy_matching_limit=50
@@ -105,71 +128,19 @@ map <leader>ff :FufFile<CR>
 map <leader>cf :FufCoverageFile<CR>
 map <leader>bd :bp<CR>:bd#<CR>
 
-Bundle "ack.vim"
-Bundle "repeat.vim"
-Bundle "surround.vim"
-" Bundle "SuperTab"
-" Bundle "file-line"
-Bundle "Align"
-Bundle "matchit.zip"
-
-"Bundle "slimv.vim"
-"let g:slimv_keybindings =2
-
-Bundle "ZoomWin"
 noremap <C-w>z :ZoomWin<CR>
 
-Bundle "scrooloose/nerdtree"
 noremap <leader>n :NERDTreeToggle<CR>
 noremap <leader>nf :NERDTreeFind<CR>
 
-Bundle "Tagbar"
 noremap <leader>tb :TagbarToggle<CR>
 
-Bundle "vimwiki"
 let g:vimwiki_list = [{'path_html': '~/public_html/wiki/', 'html_footer': '', 'maxhi': 1, 'index': 'index', 'path': '~/Documents/vimwiki/', 'gohome': 'split', 'ext': '.wiki', 'folding': 1, 'html_header': '', 'syntax': 'default', 'css_name': 'style.css'}]
 
-Bundle "tpope/vim-fugitive"
-
-Bundle 'VimOutliner'
-
-" Bundle "Solarized"
-" Bundle "Slava/vim-colors-tomorrow"
-" Bundle "msanders/snipmate.vim"
-" Bundle "w0ng/vim-hybrid"
-
-Bundle 'jelera/vim-javascript-syntax'
-" Bundle 'Lokaltog/vim-powerline'
-let g:Powerline_symbols = 'fancy'
-Bundle "bling/vim-airline"
 let g:airline_powerline_fonts=1
-
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-
-" old vim-powerline symbols
-let g:airline_left_sep = '⮀'
-let g:airline_left_alt_sep = '⮁'
-let g:airline_right_sep = '⮂'
-let g:airline_right_alt_sep = '⮃'
-let g:airline_symbols.branch = '⭠'
-let g:airline_symbols.readonly = '⭤'
-let g:airline_symbols.linenr = '⭡'
-
-Bundle "CSApprox"
-
-Bundle "derekwyatt/vim-scala"
-Bundle "scrooloose/syntastic"
-Bundle "ctrlp.vim"
-Bundle "benmills/vimux"
-
-set pastetoggle=<F2>
-
-filetype plugin indent on
-syntax enable
-
-" colorscheme torte
+"colorscheme torte
 colorscheme koehler
 
-" colorscheme hybrid
+filetype plugin indent on
+
+syntax enable
