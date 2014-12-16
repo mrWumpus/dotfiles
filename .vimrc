@@ -85,6 +85,12 @@ map <leader>tc :tabclose<CR>
 map <leader>tl :tabnext<CR>
 map <leader>th :tabprevious<CR>
 
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap } }zz
+
+nnoremap Q <nop>
+
 set cm=blowfish
 
 filetype off
@@ -109,15 +115,18 @@ Plugin 'Tagbar'
 Plugin 'vimwiki'
 Plugin 'tpope/vim-fugitive'
 " Plugin 'tpope/vim-rails'
-Plugin 'VimOutliner'
+Plugin 'vimoutliner/vimoutliner'
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'bling/vim-airline'
 Plugin 'CSApprox'
 Plugin 'derekwyatt/vim-scala'
 " Plugin 'scrooloose/syntastic'
-Plugin 'ctrlp.vim'
+" Plugin 'ctrlp.vim'
 Plugin 'benmills/vimux'
 Plugin 'LaTeX-Box-Team/LaTeX-Box'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
 call vundle#end()
 " configure FuzzyFinder
 let g:fuzzy_ignore="*.log"
@@ -138,6 +147,17 @@ noremap <leader>tb :TagbarToggle<CR>
 let g:vimwiki_list = [{'path_html': '~/public_html/wiki/', 'html_footer': '', 'maxhi': 1, 'index': 'index', 'path': '~/Documents/vimwiki/', 'gohome': 'split', 'ext': '.wiki', 'folding': 1, 'html_header': '', 'syntax': 'default', 'css_name': 'style.css'}]
 
 let g:airline_powerline_fonts=1
+
+" YouCompleteMe and UltiSnips compatibility, with the helper of supertab
+" " (via http://stackoverflow.com/a/22253548/1626737)
+" let g:SuperTabDefaultCompletionType = '<C-n>'
+" let g:SuperTabCrMapping = 0
+let g:UltiSnipsExpandTrigger = '<tab>'
+let g:UltiSnipsJumpForwardTrigger = '<tab>'
+let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
+let g:ycm_key_list_select_completion = ['<C-j>', '<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>'] 
+
 "colorscheme torte
 colorscheme koehler
 
