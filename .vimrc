@@ -10,11 +10,11 @@ set showcmd
 set incsearch
 set hlsearch
 nohl
-set shiftwidth=4
-set tabstop=4
-set softtabstop=4
-set expandtab
-set smarttab
+set shiftwidth=0
+set tabstop=2
+set softtabstop=0
+"set expandtab
+"set smarttab
 
 set linebreak
 set display+=lastline
@@ -54,8 +54,6 @@ set pastetoggle=<F2>
 set listchars=tab:>-,trail:·,eol:¶
 nmap <silent> <leader>c :set nolist!<CR>
 
-set background=dark
-
 if has("gui_running")
     set guioptions-=T
     set guioptions-=m
@@ -64,6 +62,10 @@ if has("gui_running")
     "set gfn=Luxi\ Mono\ 10
     "set gfn=Anonymous\ Pro\ 14
     set gfn=Inconsolata\ for\ Powerline\ Medium\ 12
+else
+  if exists('$TMUX')
+      set term=screen-256color
+  endif
 endif
 
 set encoding=utf-8
@@ -93,11 +95,16 @@ nnoremap Q <nop>
 
 set cm=blowfish
 
+"colorscheme torte
+"colorscheme ir_black
+colorscheme koehler
+
+"set background=dark
+
 filetype off
 
 set rtp+=~/.vim/bundle/vundle
 call vundle#begin()
-
 " let Vundle manage Vundle
 " required! 
 Plugin 'gmarik/vundle'
@@ -121,12 +128,15 @@ Plugin 'bling/vim-airline'
 Plugin 'CSApprox'
 Plugin 'derekwyatt/vim-scala'
 " Plugin 'scrooloose/syntastic'
-" Plugin 'ctrlp.vim'
-Plugin 'benmills/vimux'
-Plugin 'LaTeX-Box-Team/LaTeX-Box'
+Plugin 'ctrlp.vim'
+Plugin 'ervandew/supertab'
+" Plugin 'benmills/vimux'
+" Plugin 'LaTeX-Box-Team/LaTeX-Box'
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
+" Plugin 'SirVer/ultisnips'
+" Plugin 'honza/vim-snippets'
+Plugin 'paredit.vim'
+Plugin 'leafgarland/typescript-vim'
 call vundle#end()
 " configure FuzzyFinder
 let g:fuzzy_ignore="*.log"
@@ -144,22 +154,21 @@ noremap <leader>nf :NERDTreeFind<CR>
 
 noremap <leader>tb :TagbarToggle<CR>
 
+noremap <leader>jf :%! python -m json.tool<CR>
+noremap <leader>xf :%! xmlstarlet fo -t<CR>
+
 let g:vimwiki_list = [{'path_html': '~/public_html/wiki/', 'html_footer': '', 'maxhi': 1, 'index': 'index', 'path': '~/Documents/vimwiki/', 'gohome': 'split', 'ext': '.wiki', 'folding': 1, 'html_header': '', 'syntax': 'default', 'css_name': 'style.css'}]
 
 let g:airline_powerline_fonts=1
 
-" YouCompleteMe and UltiSnips compatibility, with the helper of supertab
-" " (via http://stackoverflow.com/a/22253548/1626737)
-" let g:SuperTabDefaultCompletionType = '<C-n>'
-" let g:SuperTabCrMapping = 0
-let g:UltiSnipsExpandTrigger = '<tab>'
-let g:UltiSnipsJumpForwardTrigger = '<tab>'
-let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
-let g:ycm_key_list_select_completion = ['<C-j>', '<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>'] 
+let g:SuperTabDefaultCompletionType = '<C-TAB>'
+let g:SuperTabCrMapping = 0
 
-"colorscheme torte
-colorscheme koehler
+let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-S-TAB>', '<Up>'] 
+
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
 
 filetype plugin indent on
 
