@@ -1,7 +1,7 @@
-set nocompatible
+
 set ruler
 set number
-"set relativenumber
+set relativenumber
 set ignorecase
 set smartcase
 set history=500
@@ -10,10 +10,10 @@ set showcmd
 set incsearch
 set hlsearch
 nohl
-set shiftwidth=0
-set tabstop=2
-set softtabstop=0
-"set expandtab
+set shiftwidth=4
+set tabstop=4
+set softtabstop=4
+set expandtab
 "set smarttab
 
 set linebreak
@@ -54,6 +54,8 @@ set pastetoggle=<F2>
 set listchars=tab:>-,trail:·,eol:¶
 nmap <silent> <leader>c :set nolist!<CR>
 
+set background=dark
+
 if has("gui_running")
     set guioptions-=T
     set guioptions-=m
@@ -61,11 +63,8 @@ if has("gui_running")
     " change the font.
     "set gfn=Luxi\ Mono\ 10
     "set gfn=Anonymous\ Pro\ 14
-    set gfn=Inconsolata\ for\ Powerline\ Medium\ 12
-else
-  if exists('$TMUX')
-      set term=screen-256color
-  endif
+    "set gfn=Inconsolata\ for\ Powerline\ Medium\ 12
+    set gfn=Inconsolata\ for\ Powerline:h18
 endif
 
 set encoding=utf-8
@@ -89,28 +88,23 @@ map <leader>th :tabprevious<CR>
 
 nnoremap n nzz
 nnoremap N Nzz
-nnoremap } }zz
+"nnoremap } }zz
 
 nnoremap Q <nop>
 
-set cm=blowfish
-
-"colorscheme torte
-"colorscheme ir_black
-colorscheme koehler
-
-"set background=dark
+set cm=blowfish2
 
 filetype off
 
-set rtp+=~/.vim/bundle/vundle
+set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+
 " let Vundle manage Vundle
 " required! 
-Plugin 'gmarik/vundle'
+Plugin 'VundleVim/Vundle.vim'
 " Plugins:
 Plugin 'L9'
-Plugin 'FuzzyFinder'
+"Plugin 'FuzzyFinder'
 Plugin 'ack.vim'
 Plugin 'repeat.vim'
 Plugin 'surround.vim'
@@ -123,24 +117,35 @@ Plugin 'vimwiki'
 Plugin 'tpope/vim-fugitive'
 " Plugin 'tpope/vim-rails'
 Plugin 'vimoutliner/vimoutliner'
-Plugin 'jelera/vim-javascript-syntax'
+"Plugin 'jelera/vim-javascript-syntax'
+Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
 Plugin 'bling/vim-airline'
-Plugin 'CSApprox'
+"Plugin 'CSApprox'
 Plugin 'derekwyatt/vim-scala'
-" Plugin 'scrooloose/syntastic'
+Plugin 'scrooloose/syntastic'
 Plugin 'ctrlp.vim'
-Plugin 'ervandew/supertab'
-" Plugin 'benmills/vimux'
-" Plugin 'LaTeX-Box-Team/LaTeX-Box'
-Plugin 'Valloric/YouCompleteMe'
+" Plugin 'supertab'
+Plugin 'benmills/vimux'
+Plugin 'LaTeX-Box-Team/LaTeX-Box'
+" Plugin 'Valloric/YouCompleteMe'
+Plugin 'Ack.vim'
 " Plugin 'SirVer/ultisnips'
 " Plugin 'honza/vim-snippets'
-Plugin 'paredit.vim'
-Plugin 'leafgarland/typescript-vim'
+Plugin 'apprentice.vim'
+"Plugin 'nhooyr/elysian.vim'
 call vundle#end()
 " configure FuzzyFinder
 let g:fuzzy_ignore="*.log"
 let g:fuzzy_matching_limit=50
+
+let g:ctrlp_map = '<C-P>'
+let g:ctrlp_cmd = 'CtrlPMixed'
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_custom_ignore = { 
+    \ 'dir': '\v[\/]\.(git|hg|svn)$|node_modules$|dist$',
+    \ }
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 
 map <leader>bb :FufBuffer<CR>
 map <leader>ff :FufFile<CR>
@@ -153,22 +158,30 @@ noremap <leader>n :NERDTreeToggle<CR>
 noremap <leader>nf :NERDTreeFind<CR>
 
 noremap <leader>tb :TagbarToggle<CR>
-
 noremap <leader>jf :%! python -m json.tool<CR>
-noremap <leader>xf :%! xmlstarlet fo -t<CR>
+noremap <leader>xf :%! xmlstarlet fo -f<CR>
 
 let g:vimwiki_list = [{'path_html': '~/public_html/wiki/', 'html_footer': '', 'maxhi': 1, 'index': 'index', 'path': '~/Documents/vimwiki/', 'gohome': 'split', 'ext': '.wiki', 'folding': 1, 'html_header': '', 'syntax': 'default', 'css_name': 'style.css'}]
 
 let g:airline_powerline_fonts=1
 
 let g:SuperTabDefaultCompletionType = '<C-TAB>'
-let g:SuperTabCrMapping = 0
 
 let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-S-TAB>', '<Up>'] 
 
-autocmd QuickFixCmdPost [^l]* nested cwindow
-autocmd QuickFixCmdPost    l* nested lwindow
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+let g:syntastic_java_checkers = ['checkstyle']
+let g:syntastic_java_checkstyle_classpath = '/Users/jfox/dev/checkstyle/checkstyle-8.8-all.jar'
+let g:syntastic_java_checkstyle_conf_file = '/Users/jfox/dev/checkstyle/sun_checks.xml'
+
+"colorscheme torte
+"colorscheme koehler
+colorscheme apprentice
 
 filetype plugin indent on
 
