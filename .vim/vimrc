@@ -1,0 +1,242 @@
+set nocompatible
+set ruler
+set number
+set relativenumber
+set ignorecase
+set smartcase
+set history=500
+set backspace=eol,start,indent
+set showcmd
+set incsearch
+set hlsearch
+nohl
+set shiftwidth=2
+set tabstop=2
+"set softtabstop=4
+set expandtab
+"set smarttab
+
+set linebreak
+set display+=lastline
+
+set nowrapscan
+
+set showmatch
+set matchtime=5
+set laststatus=2
+
+nmap <silent> <C-n> :silent :nohl<CR>
+
+let mapleader=","
+noremap \ ,
+
+set hidden
+"set wildmenu
+"set wildmode=list:longest
+
+set title
+set scrolloff=4
+set novisualbell
+set noerrorbells
+set mousehide
+set mouse=nv
+
+set wrapscan
+
+set switchbuf=useopen
+set nobackup
+set noswapfile
+
+set pastetoggle=<F2>
+
+" Map nonprintable characters and toggle visibility
+" using ,c
+set listchars=tab:>-,trail:·,eol:¶
+nmap <silent> <leader>c :set nolist!<CR>
+
+set background=dark
+
+if has("gui_running")
+    set guioptions-=T
+    set guioptions-=m
+    set guioptions+=c
+    " change the font.
+    "set gfn=Luxi\ Mono\ 10
+    "set gfn=Anonymous\ Pro\ 14
+    "set gfn=Inconsolata\ for\ Powerline\ Medium\ 12
+    set gfn=Inconsolata\ Nerd\ Font\ Complete\ Mono:h18
+endif
+
+if has("termguicolors")
+  if &term =~# '^screen'
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  endif
+  set tgc
+  set t_Co=256
+endif
+
+set encoding=utf-8
+
+if &diff
+    syntax off
+endif
+
+" Map F6 to turn spellcheck on and off
+map <F6> <Esc>:setlocal nospell! spelllang=en_us<CR>
+
+map <C-h> :bp<CR>
+map <C-l> :bn<CR>
+map <C-j> gj
+map <C-k> gk
+
+map <leader>tn :tabnew<CR>
+map <leader>tc :tabclose<CR>
+map <leader>tl :tabnext<CR>
+map <leader>th :tabprevious<CR>
+
+nnoremap n nzz
+nnoremap N Nzz
+"nnoremap } }zz
+
+nnoremap Q <nop>
+
+if !has("nvim")
+    set cm=blowfish2
+endif
+
+filetype off
+
+call plug#begin('~/.vim/bundle')
+" Plugins:
+Plug 'vim-scripts/matchit.zip'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'vim-scripts/ZoomWin'
+Plug 'scrooloose/nerdtree'
+Plug 'majutsushi/Tagbar'
+Plug 'vimwiki/vimwiki'
+Plug 'tpope/vim-fugitive'
+Plug 'vimoutliner/vimoutliner'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'bling/vim-airline'
+Plug 'derekwyatt/vim-scala'
+"Plug 'scrooloose/syntastic'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'benmills/vimux'
+Plug 'LaTeX-Box-Team/LaTeX-Box'
+" Plug 'Valloric/YouCompleteMe'
+Plug 'mileszs/ack.vim'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'mhinz/vim-startify'
+"if has("nvim")
+  "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"else
+  "Plug 'Shougo/deoplete.nvim'
+  "Plug 'roxma/nvim-yarp'
+  "Plug 'roxma/vim-hug-neovim-rpc'
+"endif
+"Plug 'carlitux/deoplete-ternjs', { 'do': 'npm i -g tern' }
+"Plug 'ternjs/tern_for_vim'
+Plug 'ryanoasis/vim-devicons'
+"Plug 'sheerun/vim-polyglot'
+Plug 'romainl/apprentice'
+Plug 'morhetz/gruvbox'
+Plug 'ervandew/supertab'
+Plug 'xuyuanp/nerdtree-git-plugin'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'scrooloose/nerdcommenter'
+Plug 'posva/vim-vue'
+Plug 'w0rp/ale'
+call plug#end()
+
+let g:ctrlp_map = '<C-P>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_custom_ignore = { 
+    \ 'dir': '\v[\/]\.(git|hg|svn)$|node_modules$|dist$',
+    \ }
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+
+map <leader>bd :bp<CR>:bd#<CR>
+
+noremap <C-w>z :ZoomWin<CR>
+
+noremap <leader>n :NERDTreeToggle<CR>
+noremap <leader>nf :NERDTreeFind<CR>
+
+noremap <leader>tb :TagbarToggle<CR>
+au FileType json noremap <buffer> <leader>jf :%! jq -M . %<CR>
+au FileType xml noremap <buffer> <leader>xf :%! xmlstarlet fo %<CR>
+
+let g:vimwiki_list = [{'path_html': '~/public_html/wiki/', 'html_footer': '', 'maxhi': 1, 'index': 'index', 'path': '~/Documents/vimwiki/', 'gohome': 'split', 'ext': '.wiki', 'folding': 1, 'html_header': '', 'syntax': 'default', 'css_name': 'style.css'}]
+
+augroup GPG
+  autocmd!
+  autocmd BufReadPost  *.asc :%!gpg -q -d
+  autocmd BufReadPost  *.asc |redraw!
+  autocmd BufWritePre  *.asc :%!gpg -q -e -a -r wumpus@paksao.net
+  autocmd BufWritePost *.asc u
+  autocmd VimLeave     *.asc :!clear
+augroup END
+
+let g:airline_powerline_fonts=1
+
+"let g:SuperTabDefaultCompletionType = '<C-TAB>'
+let g:SuperTabDefaultCompletionType="<c-x><c-o>"
+
+"let g:syntastic_error_symbol = "✗"
+"let g:syntastic_warning_symbol = "‼"
+
+"let g:syntastic_javascript_checkers = ['eslint']
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
+
+"let g:syntastic_java_checkers = ['checkstyle']
+"let g:syntastic_java_checkstyle_classpath = '/Users/jfox/dev/checkstyle/checkstyle-8.8-all.jar'
+"let g:syntastic_java_checkstyle_conf_file = '/Users/jfox/dev/checkstyle/sun_checks.xml'
+
+let g:ale_fix_on_save=1
+let g:ale_set_loclist=0
+let g:ale_set_quickfix=1
+
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_ignore_case = 1
+let g:deoplete#enable_smart_case = 1
+let g:deoplete#enable_camel_case = 1
+let g:deoplete#enable_refresh_always = 1
+let g:deoplete#max_abbr_width = 0
+let g:deoplete#max_menu_width = 0
+let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
+
+let g:tern_request_timeout = 1
+let g:tern_request_timeout = 6000
+let g:tern#command = ["tern"]
+let g:tern#arguments = ["--persistent"]
+
+let g:NERDTreeHighlightCursorline = 0
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗ ",
+    \ "Clean"     : "✔︎",
+    \ 'Ignored'   : '☒',
+    \ "Unknown"   : "?"
+    \ }
+
+"colorscheme torte
+"colorscheme koehler
+
+filetype plugin indent on
+"colorscheme apprentice
+let g:gruvbox_contrast_dark = 'soft'
+colorscheme gruvbox
+
+syntax enable
